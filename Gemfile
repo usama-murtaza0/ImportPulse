@@ -8,6 +8,8 @@ gem "puma", ">= 5.0"
 
 # Background processing
 gem "sidekiq", "~> 7.2"
+gem "connection_pool", "~> 2.4"
+gem "redis", "~> 5.0" 
 
 # Hotwire
 gem "turbo-rails"
