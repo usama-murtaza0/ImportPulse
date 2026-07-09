@@ -1,0 +1,53 @@
+:root {
+  --ink: #1a2233;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --ok: #16a34a;
+  --warn: #d97706;
+  --bad: #dc2626;
+  --line: #e5e7eb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1.25rem 4rem;
+}
+
+.site-header { padding: 2rem 0 1rem; border-bottom: 1px solid var(--line); margin-bottom: 2rem; }
+.site-header h1 { margin: 0; }
+.site-header h1 a { color: var(--ink); text-decoration: none; }
+.tagline { color: var(--muted); margin: 0.25rem 0 0; }
+
+.flash { padding: 0.75rem 1rem; border-radius: 6px; }
+.flash--notice { background: #ecfdf5; color: var(--ok); }
+.flash--alert { background: #fef2f2; color: var(--bad); }
+
+.upload-panel { background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 1.25rem; margin-bottom: 2rem; }
+.upload-panel form { display: flex; gap: 0.75rem; align-items: center; }
+.hint { color: var(--muted); font-size: 0.875rem; margin-bottom: 0; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+code { font-size: 0.8rem; color: var(--muted); }
+
+.status { font-size: 0.8rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 999px; background: #eef2ff; color: var(--accent); }
+.status--completed { background: #ecfdf5; color: var(--ok); }
+.status--completed_with_errors { background: #fffbeb; color: var(--warn); }
+.status--failed { background: #fef2f2; color: var(--bad); }
+
+.progress-panel { margin: 1.5rem 0 2.5rem; }
+.progress-meta { display: flex; gap: 1rem; margin-bottom: 0.5rem; color: var(--muted); font-size: 0.9rem; }
+.progress-bar { height: 10px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.progress-bar__fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 300ms ease; }
+.progress-percent { color: var(--muted); font-size: 0.85rem; margin-top: 0.35rem; }
+
+input[type="submit"] {
+  background: var(--accent); color: white; border: 0; border-radius: 6px;
+  padding: 0.5rem 1rem; font-weight: 600; cursor: pointer;
+}

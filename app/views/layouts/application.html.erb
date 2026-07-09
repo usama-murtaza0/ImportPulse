@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ImportPulse</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <h1><%= link_to "ImportPulse", root_path %></h1>
+      <p class="tagline">Idempotent CSV imports with live progress — Sidekiq + Turbo Streams</p>
+    </header>
+
+    <main>
+      <% if notice %><p class="flash flash--notice"><%= notice %></p><% end %>
+      <% if alert %><p class="flash flash--alert"><%= alert %></p><% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<%= turbo_stream_from @import %>
+
+<p><%= link_to "← All imports", imports_path %></p>
+
+<h2><%= @import.filename %></h2>
+
+<%= render "imports/progress", import: @import %>
+
+<section>
+  <h3>Row errors</h3>
+  <table>
+    <thead>
+      <tr><th>Row</th><th>Problem</th><th>Raw data</th></tr>
+    </thead>
+    <tbody id="import_<%= @import.id %>_errors">
+      <%= render partial: "imports/error_row", collection: @import_errors, as: :import_error %>
+    </tbody>
+  </table>
+</section>

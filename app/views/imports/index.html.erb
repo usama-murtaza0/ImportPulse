@@ -1,0 +1,38 @@
+<section class="upload-panel">
+  <h2>New import</h2>
+
+  <%= form_with url: imports_path, multipart: true do |form| %>
+    <%= form.file_field :file, accept: ".csv", required: true %>
+    <%= form.submit "Start import" %>
+  <% end %>
+
+  <p class="hint">
+    Expected columns: <code>name,email</code>.
+    Invalid rows are collected as errors without stopping the import.
+  </p>
+</section>
+
+<section>
+  <h2>Imports</h2>
+
+  <% if @imports.none? %>
+    <p>No imports yet — upload a CSV to see the pipeline in action.</p>
+  <% else %>
+    <table>
+      <thead>
+        <tr><th>File</th><th>Status</th><th>Rows</th><th>Failed</th><th>Started</th></tr>
+      </thead>
+      <tbody>
+        <% @imports.each do |import| %>
+          <tr>
+            <td><%= link_to import.filename, import_path(import) %></td>
+            <td><span class="status status--<%= import.status %>"><%= import.status.humanize %></span></td>
+            <td><%= import.processed_rows %> / <%= import.total_rows %></td>
+            <td><%= import.failed_rows %></td>
+            <td><%= import.created_at.strftime("%b %-d, %H:%M") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</section>

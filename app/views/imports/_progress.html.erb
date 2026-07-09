@@ -1,0 +1,13 @@
+<div id="import_<%= import.id %>_progress" class="progress-panel">
+  <div class="progress-meta">
+    <span class="status status--<%= import.status %>"><%= import.status.humanize %></span>
+    <span><%= import.processed_rows %> imported</span>
+    <span><%= import.failed_rows %> failed</span>
+    <span><%= import.total_rows %> total</span>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-bar__fill" style="width: <%= import.progress_percentage %>%"></div>
+  </div>
+  <p class="progress-percent"><%= import.progress_percentage %>%</p>
+</div>
