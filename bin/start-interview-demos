@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+MISE=/home/Usama/.local/bin/mise
+export RAILS_ENV=development
+pg_isready -q || { echo "PostgreSQL is stopped. Run: sudo service postgresql start"; exit 1; }
+redis-cli ping >/dev/null || { echo "Redis is stopped. Run: sudo service redis-server start"; exit 1; }
+cd /home/Usama/ImportPulse
+mkdir -p log tmp/pids
+export PGHOST=/var/run/postgresql PGUSER=Usama REDIS_URL=redis://127.0.0.1:6379/12
+if ! systemctl --user is-active --quiet importpulse-demo-web; then
+  systemd-run --user --collect --unit=importpulse-demo-web --working-directory="$PWD" --setenv=RAILS_ENV=development --setenv=PGHOST="$PGHOST" --setenv=PGUSER="$PGUSER" --setenv=REDIS_URL="$REDIS_URL" "$MISE" exec ruby@3.4.11 -- bundle exec rails server -b 127.0.0.1 -p 3001
+fi
+if ! systemctl --user is-active --quiet importpulse-demo-worker; then
+  systemd-run --user --collect --unit=importpulse-demo-worker --working-directory="$PWD" --setenv=RAILS_ENV=development --setenv=PGHOST="$PGHOST" --setenv=PGUSER="$PGUSER" --setenv=REDIS_URL="$REDIS_URL" "$MISE" exec ruby@3.4.11 -- bundle exec sidekiq -C config/sidekiq.yml -t 10 -g importpulse-demo
+fi
+unset PGHOST PGUSER REDIS_URL
+cd /home/Usama/NexusMarket
+mkdir -p log tmp/pids
+if ! systemctl --user is-active --quiet nexusmarket-demo-web; then
+  systemd-run --user --collect --unit=nexusmarket-demo-web --working-directory="$PWD" --setenv=RAILS_ENV=development "$MISE" exec ruby@3.4.11 -- bundle exec rails server -b 127.0.0.1 -p 3002
+fi
+sleep 3
+curl -fsS -o /dev/null http://127.0.0.1:3001/
+curl -fsS -o /dev/null http://127.0.0.1:3002/up
+echo "ImportPulse: http://localhost:3001"
+echo "NexusMarket: http://localhost:3002"
